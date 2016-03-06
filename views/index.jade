@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome, #{username}
+  a(href="/joke") Random Joke
+  br
+  a(href="/jokes") All Jokes
+  br
+  a(href='/addJoke') Add New Joke

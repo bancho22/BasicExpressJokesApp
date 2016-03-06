@@ -1,0 +1,11 @@
+//
+   Created by Bancho on 03-Mar-16.
+
+extends layout
+
+block content
+    h1 Jokes
+    ul
+        each val in jokes
+            li= val
+    a(href="/") Main Page
