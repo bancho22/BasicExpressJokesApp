@@ -6,10 +6,6 @@ var jokes = ["A Fernet a day keeps the doctor away.",
     "Q: Why did the chicken cross the road? A: To get to the other beer.",
     "Chelsea is the best team in the Premier League."];
 
-var addJoke = function(joke){
-    jokes.push(joke);
-};
-
 module.exports = {
     allJokes : jokes,
     getRandomJoke : function(){
@@ -19,5 +15,7 @@ module.exports = {
         }
         return jokes[i];
     },
-    addJoke : addJoke
+    addJoke : function(joke){
+        jokes.push(joke);
+    }
 }

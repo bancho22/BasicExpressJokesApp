@@ -29,7 +29,7 @@ var server = http.createServer(app);
 var db = require("../db/db");
 
 //Connection string to your local database (REPLACE connection string with your own)
-var connection_string = "mongodb://27017";
+var connection_string = "mongodb://localhost:27017";
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   connection_string = 'mongodb://'+ process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -50,6 +50,7 @@ db.connect(connection_string,function(err){
     server.on('listening', onListening);
   }
 });
+
 
 /**
  * Normalize a port into a number, string, or false.

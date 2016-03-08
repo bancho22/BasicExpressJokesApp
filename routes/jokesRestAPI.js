@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var jokes = require('../model/jokesModule');
+var jokes = require('../model/jokesArrayModule');
 
 router.get('/joke/random', function(req, res, next) {
   res.json(jokes.getRandomJoke());
