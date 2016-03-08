@@ -25,11 +25,11 @@ console.log(app.get("ip"));
  */
 var server = http.createServer(app);
 
-//The db.js file refered to in the slide-set (change path if necessary)
+//The dbModule.js file refered to in the slide-set (change path if necessary)
 var db = require("../db/db");
 
 //Connection string to your local database (REPLACE connection string with your own)
-var connection_string = "mongodb://localhost:27017";
+var connection_string = "mongodb://localhost:27017/test";
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   connection_string = 'mongodb://'+ process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +

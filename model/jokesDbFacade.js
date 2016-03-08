@@ -4,7 +4,7 @@
 
 var connect = require("../db/db");
 
-function allJokes(done){
+function _allJokes(done){
     var db = connect.get();
     db.collection("jokes").find({}).toArray(function(err, data){
         if(err){
@@ -15,4 +15,4 @@ function allJokes(done){
     });
 }
 
-exports.allJokes = function(){};
+exports.allJokes = _allJokes;
