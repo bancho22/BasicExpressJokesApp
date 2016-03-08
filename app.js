@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'I like big booty bitches', saveUninitialized: true, resave: true}));
 
 app.use(function (req, res, next) {
-    if(req.url.startsWith("/api")){
+    if(req.url.indexOf("/api") === 0){
         next();
     }
     if(req.session.username){
