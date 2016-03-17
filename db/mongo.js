@@ -12,7 +12,7 @@ var connect = function(url, done) {
             return done(err);
         }
         connection = db;
-        console.log("DB connection ready");
+        console.log("Connection to Mongo successful");
         done();
     })
 };

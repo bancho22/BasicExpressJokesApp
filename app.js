@@ -5,10 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var RedisStore = require("connect-redis")(session);
 
 var index = require('./routes/index');
 var jokes = require('./routes/jokes');
-var RestAPI = require('./routes/jokesRestAPI');
+var restAPI = require('./routes/jokesRestAPI');
+
+var redis = require("./db/redis");
 
 var app = express();
 
@@ -23,13 +26,23 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({secret: 'I like big booty bitches', saveUninitialized: true, resave: true}));
+app.use(session({
+    secret: 'tiho, nedei da kazvash na nikoi',
+    store: new RedisStore({
+        host: '127.0.0.1',
+        port: 6379,
+        client: redis.getClinet()
+    }),
+    saveUninitialized: false,
+    resave: false,
+    cookie: {maxAge : 60*1000}
+}));
 
 app.use(function (req, res, next) {
     if(req.url.indexOf("/api") === 0){
         next();
     }
-    if(req.session.username){
+    else if(req.session.username){
         next();
     }
     else{
@@ -47,7 +60,7 @@ app.use(function (req, res, next) {
 
 app.use('/', index);
 app.use('/', jokes);
-app.use('/api', RestAPI);
+app.use('/api', restAPI);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

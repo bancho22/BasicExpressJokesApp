@@ -26,10 +26,10 @@ console.log(app.get("ip"));
 var server = http.createServer(app);
 
 //The dbModule.js file refered to in the slide-set (change path if necessary)
-var db = require("../db/db");
+var db = require("../db/mongo");
 
 //Connection string to your local database (REPLACE connection string with your own)
-var connection_string = "mongodb://localhost:27017/test";
+var connection_string = "mongodb://127.0.0.1:27017/test";
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   connection_string = 'mongodb://'+ process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -39,15 +39,24 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
       process.env.OPENSHIFT_APP_NAME;
 }
 
+var redis = require("../db/redis");
+
 db.connect(connection_string,function(err){
   if(err){
     console.log("Could not connect to Database");
     return;
   } else
   {
-    server.listen(app.get("port"),app.get("ip"));
-    server.on('error', onError);
-    server.on('listening', onListening);
+    redis.connect(function(err){
+        if(err){
+            console.log("Could not connect to Redis");
+            return;
+        }else{
+            server.listen(app.get("port"),app.get("ip"));
+            server.on('error', onError);
+            server.on('listening', onListening);
+        }
+    });
   }
 });
 
